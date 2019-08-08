@@ -22,11 +22,11 @@ namespace ProjectBulder.Infa.Data.Auth
             ThrowIfInvalidOptions(_jwtOptions);
         }
 
-        public async Task<Token> GenerateEncodedToken(string id, string userName)
+        public async Task<Token> GenerateEncodedToken(string id, string userName, IEnumerable<string> roles)
         {
             var identity = GenerateClaimsIdentity(id, userName);
 
-            var claims = new[]
+            var claims = new List<Claim>
             {
                  new Claim(JwtRegisteredClaimNames.Sub, id),
                  new Claim(JwtRegisteredClaimNames.UniqueName, userName),
@@ -35,6 +35,11 @@ namespace ProjectBulder.Infa.Data.Auth
                  identity.FindFirst(Constants.Constants.Strings.JwtClaimIdentifiers.Rol),
                  identity.FindFirst(Constants.Constants.Strings.JwtClaimIdentifiers.Id)
             };
+
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             // Create the JWT security token and encode it.
             var jwt = new JwtSecurityToken(

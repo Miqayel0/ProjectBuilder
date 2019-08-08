@@ -8,8 +8,8 @@ namespace ProjectBuilder.Application.Dtos.Account
     public class RegisterInput
     {
         public string UserName { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
 
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }

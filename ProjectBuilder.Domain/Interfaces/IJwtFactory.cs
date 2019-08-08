@@ -8,6 +8,6 @@ namespace ProjectBuilder.Domain.Interfaces
 {
     public interface IJwtFactory
     {
-        Task<Token> GenerateEncodedToken(string id, string userName);
+        Task<Token> GenerateEncodedToken(string id, string userName, IEnumerable<string> roles);
     }
 }
