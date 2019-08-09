@@ -84,7 +84,6 @@ namespace ProjectBuilder.WebAPI
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
             }).AddJwtBearer(configureOptions =>
             {
                 configureOptions.ClaimsIssuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
@@ -152,6 +151,7 @@ namespace ProjectBuilder.WebAPI
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
+
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseHttpsRedirection();
