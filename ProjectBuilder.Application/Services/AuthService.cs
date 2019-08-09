@@ -12,25 +12,29 @@ namespace ProjectBuilder.Application.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
         private readonly IJwtFactory _jwtFactory;
 
-        public AuthService(SignInManager<User> signInManager, IJwtFactory jwtFactory)
+        public AuthService(UserManager<User> userManager, IJwtFactory jwtFactory)
         {
-            _signInManager = signInManager;
+            _userManager = userManager;
             _jwtFactory = jwtFactory;
         }
         public async Task<LoginOutput> Login(LoginInput loginInput)
         {
-            var result = await _signInManager.PasswordSignInAsync(loginInput.UserName, loginInput.Password, false, false);
-
-            if (!result.Succeeded)
+            if (string.IsNullOrWhiteSpace(loginInput.Password) || string.IsNullOrWhiteSpace(loginInput.UserName))
             {
-                throw new Exception();
+                throw new Exception("Invalid UserName or Password");
             }
 
-            var user = await _signInManager.UserManager.FindByNameAsync(loginInput.UserName);
-            var roles = await _signInManager.UserManager.GetRolesAsync(user);
+            var user = await _userManager.FindByNameAsync(loginInput.UserName);
+
+            if (user == null || !await _userManager.CheckPasswordAsync(user, loginInput.Password))
+            {
+                throw new Exception("Invalid UserName or Password");
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
 
             var token = await _jwtFactory.GenerateEncodedToken(user.Id, user.UserName, roles);
 
