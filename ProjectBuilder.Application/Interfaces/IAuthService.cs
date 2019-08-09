@@ -1,8 +1,5 @@
-﻿using ProjectBuilder.Application.Dtos.Auth;
-using ProjectBuilder.Domain.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ProjectBuilder.Application.Dtos.Account;
+using ProjectBuilder.Application.Dtos.Auth;
 using System.Threading.Tasks;
 
 namespace ProjectBuilder.Application.Interfaces

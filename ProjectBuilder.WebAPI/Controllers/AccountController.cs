@@ -21,9 +21,9 @@ namespace ProjectBuilder.WebAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<AccountDto>> GetAccount()
         {
-            return new string[] { "value1", "value2" };
+            return await _accountService.GetAccount(User);
         }
 
         [HttpGet("{id}")]

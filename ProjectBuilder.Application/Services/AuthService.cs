@@ -14,7 +14,6 @@ namespace ProjectBuilder.Application.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly IJwtFactory _jwtFactory;
-
         public AuthService(UserManager<User> userManager, IJwtFactory jwtFactory)
         {
             _userManager = userManager;

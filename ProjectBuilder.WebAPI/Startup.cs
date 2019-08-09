@@ -49,8 +49,6 @@ namespace ProjectBuilder.WebAPI
                                         .WithOrigins("http://localhost:3000")
                                         .WithOrigins("http://localhost:3001"));
             });
-
-            services.AddSignalR();
             // jwt wire up
             // Get options from app settings
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
@@ -142,6 +140,8 @@ namespace ProjectBuilder.WebAPI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseSwaggerUI(c =>
             {
