@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectBuilder.Application.Dtos.Account;
@@ -14,16 +16,15 @@ namespace ProjectBuilder.WebAPI.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
-
-        public AccountController (IAccountService accountService)
+        public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<AccountDto>> GetAccount()
+        public async Task Get()
         {
-            return await _accountService.GetAccount(User);
+            await Task.CompletedTask;
         }
 
         [HttpGet("{id}")]

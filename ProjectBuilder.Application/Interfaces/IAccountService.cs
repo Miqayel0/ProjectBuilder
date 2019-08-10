@@ -10,6 +10,5 @@ namespace ProjectBuilder.Application.Interfaces
     public interface IAccountService
     {
         Task<RegisterOutput> Register(RegisterInput input);
-        Task<AccountDto> GetAccount(ClaimsPrincipal input);
     }
 }

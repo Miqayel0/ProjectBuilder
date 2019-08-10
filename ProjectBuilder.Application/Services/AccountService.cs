@@ -51,25 +51,5 @@ namespace ProjectBuilder.Application.Services
             return new RegisterOutput { CanLogin = true };
         }
 
-        public async Task<AccountDto> GetAccount(ClaimsPrincipal input)
-        {
-            var user = await _userManager.GetUserAsync(input);
-
-            if (user == null)
-            {
-                throw new Exception("User dose not exist");
-            }
-
-            var roles = await _userManager.GetRolesAsync(user);
-
-            return new AccountDto
-            {
-                Name = user.Name,
-                Surname = user.Surname,
-                Email = user.Email,
-                IconUrl = user.IconUrl,
-                Roles = roles,
-            };
-        }
     }
 }

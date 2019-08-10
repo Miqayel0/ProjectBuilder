@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProjectBuilder.Application.Dtos.Account;
 using ProjectBuilder.Application.Dtos.Auth;
 using ProjectBuilder.Application.Interfaces;
 
@@ -21,9 +23,11 @@ namespace ProjectBuilder.WebAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Authorize]
+        public async Task<ActionResult<ProfileDto>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var userId = User.Claims.Where(c => c.Type == "id").Select(c => c.Value).FirstOrDefault();
+            return Ok(await _authService.GetProfile(userId));
         }
 
         [HttpGet("{id}")]
@@ -33,7 +37,7 @@ namespace ProjectBuilder.WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<LoginOutput>> Login([FromForm] LoginInput loginInput)
+        public async Task<ActionResult<LoginOutput>> Login([FromBody] LoginInput loginInput)
         {
             return Ok(await _authService.Login(loginInput));
         }
