@@ -1,5 +1,7 @@
-﻿using ProjectBuilder.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjectBuilder.Domain.Entities;
 using ProjectBuilder.Domain.Interfaces;
+using ProjectBulder.Infa.Data.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,19 +11,25 @@ namespace ProjectBulder.Infa.Data.Repositories
 {
     public class ProjectRepository : IProjectRepository
     {
-        public Task Add(Project project)
+        private readonly ApplicationDbContext _context;
+
+        public ProjectRepository(ApplicationDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task Add(Project project)
+        {
+            await _context.AddAsync(project);
         }
 
-        public Task<IEnumerable<Project>> Get()
+        public async Task<IEnumerable<Project>> Get()
         {
-            throw new NotImplementedException();
+            return (IEnumerable<Project>)(await _context.Projects.ToListAsync()).Find(p => p.StartDate > DateTime.UtcNow);
         }
 
-        public Task<Project> GetById(string id)
+        public async Task<Project> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Projects.FindAsync(id);
         }
 
         public Task Remove(Project project)
@@ -29,9 +37,9 @@ namespace ProjectBulder.Infa.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public Task Update(Project project)
+        public async Task Update(Project project)
         {
-            throw new NotImplementedException();
+            await Task.FromResult(_context.Projects.Update(project));
         }
     }
 }

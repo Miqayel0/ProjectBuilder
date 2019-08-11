@@ -9,7 +9,7 @@ namespace ProjectBuilder.Domain.Interfaces
     public interface IProjectRepository
     {
         Task<IEnumerable<Project>> Get();
-        Task<Project> GetById(string id);
+        Task<Project> GetById(int id);
         Task Add(Project project);
         Task Remove(Project project);
         Task Update(Project project);

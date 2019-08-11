@@ -10,7 +10,7 @@ namespace ProjectBuilder.Application.Interfaces
     {
         Task<IEnumerable<ProjectDto>> Get();
         Task<ProjectDto> GetById(string id);
-        Task Add(ProjectDto project);
+        Task Add(CreateProjectDto project);
         Task Remove(ProjectDto project);
         Task Update(ProjectDto project);
     }

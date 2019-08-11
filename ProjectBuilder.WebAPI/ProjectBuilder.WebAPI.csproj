@@ -17,4 +17,8 @@
     <ProjectReference Include="..\ProjectBuilder.Infa.IoC\ProjectBuilder.Infa.IoC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\Project\" />
+  </ItemGroup>
+
 </Project>

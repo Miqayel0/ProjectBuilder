@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ProjectBuilder.Domain.Entities
+﻿namespace ProjectBuilder.Domain.Entities
 {
     public class Donation
     {

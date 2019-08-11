@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectBulder.Infa.Data.Contexts;
 
 namespace ProjectBulder.Infa.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190811110310_ChangeName")]
+    partial class ChangeName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,15 +47,15 @@ namespace ProjectBulder.Infa.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a287f90e-5332-43fc-9b96-9f52173e06ec",
-                            ConcurrencyStamp = "ce8c530c-1c45-4940-b29c-c130f5763030",
+                            Id = "6b67fb53-1501-4ebb-8358-718b7b6c6fff",
+                            ConcurrencyStamp = "7f7392ae-af35-456b-aa7c-91016fa1ccb6",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "67663154-b757-48dc-b8ea-68adf73a9a37",
-                            ConcurrencyStamp = "1dc2fdc4-225a-4c22-9f4a-b15524c5797f",
+                            Id = "54c3672d-208d-4fd7-a7ad-22a85c89edd9",
+                            ConcurrencyStamp = "5d378042-0151-4932-84b7-079265d96ebf",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -183,9 +185,7 @@ namespace ProjectBulder.Infa.Data.Migrations
                     b.Property<decimal?>("DonatedAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("DonationsCount");
-
-                    b.Property<DateTime>("EndDate");
+                    b.Property<int>("DonatedCount");
 
                     b.Property<DateTime>("Finished");
 
@@ -202,9 +202,6 @@ namespace ProjectBulder.Infa.Data.Migrations
                     b.Property<string>("Name");
 
                     b.Property<DateTime>("StartDate");
-
-                    b.Property<string>("Status")
-                        .IsRequired();
 
                     b.HasKey("Id");
 
