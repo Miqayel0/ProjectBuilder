@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ProjectBuilder.Domain.Entities;
+using ProjectBulder.Infa.Data.EfConfig;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,15 +15,14 @@ namespace ProjectBulder.Infa.Data.Contexts
             : base(options)
         {
         }
-
+        public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<Donation> Donations { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            // builder.ApplyConfiguration(new UserConfiguration());
-
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new ProjectConfiguration());
+            builder.ApplyConfiguration(new DonationConfiguration());
             base.OnModelCreating(builder);
-            // Customize the ASP.NET Core Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Core Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
 
             builder.Entity<IdentityRole>().HasData(new IdentityRole
             {

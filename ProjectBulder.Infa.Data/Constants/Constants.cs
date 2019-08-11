@@ -17,6 +17,11 @@ namespace ProjectBulder.Infa.Data.Constants
             {
                 public const string ApiAccess = "api_access";
             }
+
+            public static class SqlDataTypes
+            {
+                public const string SqlDecimal = "decimal(18,2)";
+            }
         }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectBulder.Infa.Data.Contexts;
 
 namespace ProjectBulder.Infa.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190811103146_Donations")]
+    partial class Donations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,15 +47,15 @@ namespace ProjectBulder.Infa.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8ee88693-878c-45e1-9c34-e82e2bbc6ea7",
-                            ConcurrencyStamp = "e0173408-189e-43d5-a86c-8eb4d9ff49ee",
+                            Id = "a0fe6a4c-1110-4f3f-87b2-d688809b2474",
+                            ConcurrencyStamp = "8a042c9c-162c-473b-8887-35f535f8dee8",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "f1c2c85a-b1e7-4a57-9bac-b73bb21e9ced",
-                            ConcurrencyStamp = "19fcaa7f-4ace-43c1-b2d2-2be2fd767972",
+                            Id = "3d5cb5ca-cdf1-4ecf-aca1-d8655253b76f",
+                            ConcurrencyStamp = "f40dfc02-0e49-4afa-8a3d-5b6fb1afd785",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -188,8 +190,6 @@ namespace ProjectBulder.Infa.Data.Migrations
                     b.Property<DateTime>("Finished");
 
                     b.Property<string>("ImageUrl");
-
-                    b.Property<string>("InitatorName");
 
                     b.Property<string>("InitiatorId");
 

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectBulder.Infa.Data.Contexts;
 
 namespace ProjectBulder.Infa.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190810223515_Project")]
+    partial class Project
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,15 +47,15 @@ namespace ProjectBulder.Infa.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8ee88693-878c-45e1-9c34-e82e2bbc6ea7",
-                            ConcurrencyStamp = "e0173408-189e-43d5-a86c-8eb4d9ff49ee",
+                            Id = "cfbc33ec-574e-47b8-9273-f1bc800eb668",
+                            ConcurrencyStamp = "a7963c2d-83ac-4906-95d0-327c1613ca38",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "f1c2c85a-b1e7-4a57-9bac-b73bb21e9ced",
-                            ConcurrencyStamp = "19fcaa7f-4ace-43c1-b2d2-2be2fd767972",
+                            Id = "3bd3719d-bbe4-4eee-a665-2ee30ae774b6",
+                            ConcurrencyStamp = "1df23776-c36c-4746-8c6f-03b9e8646a82",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -145,28 +147,6 @@ namespace ProjectBulder.Infa.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ProjectBuilder.Domain.Entities.Donation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal?>("CurrentDonation")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("ProjectId");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Donations");
-                });
-
             modelBuilder.Entity("ProjectBuilder.Domain.Entities.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -180,7 +160,7 @@ namespace ProjectBulder.Infa.Data.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<decimal?>("DonatedAmount")
+                    b.Property<decimal>("DonatedAmount")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("DonatedCount");
@@ -189,21 +169,15 @@ namespace ProjectBulder.Infa.Data.Migrations
 
                     b.Property<string>("ImageUrl");
 
-                    b.Property<string>("InitatorName");
-
-                    b.Property<string>("InitiatorId");
-
                     b.Property<DateTime>("LastUpdatedAt");
-
-                    b.Property<string>("Location");
 
                     b.Property<string>("Name");
 
-                    b.Property<DateTime>("StartDate");
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InitiatorId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Projects");
                 });
@@ -243,6 +217,8 @@ namespace ProjectBulder.Infa.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<int?>("ProjectId");
+
                     b.Property<string>("SecurityStamp");
 
                     b.Property<string>("Surname");
@@ -261,6 +237,8 @@ namespace ProjectBulder.Infa.Data.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -310,23 +288,18 @@ namespace ProjectBulder.Infa.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("ProjectBuilder.Domain.Entities.Donation", b =>
+            modelBuilder.Entity("ProjectBuilder.Domain.Entities.Project", b =>
                 {
-                    b.HasOne("ProjectBuilder.Domain.Entities.Project", "Project")
-                        .WithMany("Donations")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ProjectBuilder.Domain.Entities.User", "User")
-                        .WithMany("Donations")
+                    b.HasOne("ProjectBuilder.Domain.Entities.User")
+                        .WithMany("Projects")
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("ProjectBuilder.Domain.Entities.Project", b =>
+            modelBuilder.Entity("ProjectBuilder.Domain.Entities.User", b =>
                 {
-                    b.HasOne("ProjectBuilder.Domain.Entities.User", "Initiator")
-                        .WithMany("InitialProjects")
-                        .HasForeignKey("InitiatorId");
+                    b.HasOne("ProjectBuilder.Domain.Entities.Project")
+                        .WithMany("Sponsors")
+                        .HasForeignKey("ProjectId");
                 });
 #pragma warning restore 612, 618
         }
