@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectBuilder.Application.Dtos.Project;
+using ProjectBuilder.Application.Interfaces;
+using ProjectBuilder.WebAPI.Models.Project;
 
 namespace ProjectBuilder.WebAPI.Controllers
 {
@@ -12,21 +14,28 @@ namespace ProjectBuilder.WebAPI.Controllers
     [ApiController]
     public class ProjectController : ControllerBase
     {
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private readonly IProjectService _projectService;
+        public ProjectController(IProjectService projectService)
         {
-            return new string[] { "value1", "value2" };
+            _projectService = projectService;
         }
 
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet]
+        public async Task<ActionResult<ProjectListViewModel>> Get()
         {
-            return "value";
+            return Ok(new ProjectListViewModel { Projects = await _projectService.Get() });
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProjectDto>> Get(int id)
+        {
+            return Ok(await _projectService.GetById(id));
         }
 
         [HttpPost]
         public void Post([FromForm] CreateProjectDto input)
         {
+            _projectService.Add(input);
         }
 
         [HttpPut("{id}")]

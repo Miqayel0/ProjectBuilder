@@ -15,12 +15,12 @@ namespace ProjectBuilder.Domain.Entities
         public string Description { get; set; }
         public decimal Amount { get; set; }
         public decimal? DonatedAmount { get; set; }
-        public int DonationsCount { get; set; }
+        public int? DonationsCount { get; set; }
         public string ImageUrl { get; set; }
         public string Location { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public DateTime Finished { get; set; }
+        public DateTime? Finished { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdatedAt { get; set; }
         public string InitiatorName { get; set; }

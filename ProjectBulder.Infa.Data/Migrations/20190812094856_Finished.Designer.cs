@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectBulder.Infa.Data.Contexts;
 
 namespace ProjectBulder.Infa.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190812094856_Finished")]
+    partial class Finished
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,15 +47,15 @@ namespace ProjectBulder.Infa.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0b1e276e-5fd5-4f34-bfa1-a3ca017c2e14",
-                            ConcurrencyStamp = "e9e97353-cafa-4dbe-8b59-cf0e652fa806",
+                            Id = "e388487c-e5bd-4106-9025-e042d06b6e98",
+                            ConcurrencyStamp = "edfea3a4-c948-4f9f-9b02-504e6cf55a02",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "bf7bfd51-ecc1-4c1f-b1cc-d8fa91bd1c24",
-                            ConcurrencyStamp = "36c8a7f2-63b6-4e84-bdbd-86807418e0f4",
+                            Id = "38173251-3785-4575-b9fb-a196fbe582fe",
+                            ConcurrencyStamp = "bfe6aa05-d9f0-4134-87a0-eb95669d7a03",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -183,7 +185,7 @@ namespace ProjectBulder.Infa.Data.Migrations
                     b.Property<decimal?>("DonatedAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("DonationsCount");
+                    b.Property<int>("DonationsCount");
 
                     b.Property<DateTime>("EndDate");
 

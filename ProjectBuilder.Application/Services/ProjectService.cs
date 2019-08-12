@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
 using ProjectBuilder.Application.Dtos.Project;
 using ProjectBuilder.Application.Interfaces;
 using ProjectBuilder.Domain.Entities;
@@ -14,12 +15,15 @@ namespace ProjectBuilder.Application.Services
     {
         private readonly IProjectRepository _projectReposytory;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
         public static IHostingEnvironment _environment;
-        public ProjectService(IProjectRepository projectReposytory, IHostingEnvironment environment, IUnitOfWork unitOfWork)
+
+        public ProjectService(IProjectRepository projectReposytory, IHostingEnvironment environment, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _projectReposytory = projectReposytory;
             _environment = environment;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
         public async Task Add(CreateProjectDto project)
         {
@@ -27,9 +31,23 @@ namespace ProjectBuilder.Application.Services
             string imgUrl = "";
             var files = project.Files;
 
+            var newProject = new Project
+            {
+                Name = project.Name,
+                Description = project.Description,
+                InitiatorName = project.InitiatorName,
+                Amount = project.Amount,
+                StartDate = project.StartDate,
+                EndDate = project.EndDate,
+                Location = project.Location,
+                Status = ProjectStatus.Pending
+            };
+
+            await _projectReposytory.Add(newProject);
+
             if (files.Length > 0)
             {
-                imgUrl = imgPath + files.FileName;
+                imgUrl = imgPath + Guid.NewGuid().ToString() + files.FileName;
 
                 if (!Directory.Exists(_environment.WebRootPath + imgPath))
                 {
@@ -41,35 +59,27 @@ namespace ProjectBuilder.Application.Services
                     files.CopyTo(filestream);
                     filestream.Flush();
                 }
+
+                newProject.ImageUrl = imgUrl;
             }
 
-            var newProject = new Project
-            {
-                Name = project.Name,
-                Description = project.Description,
-                InitiatorName = project.InitiatorName,
-                Amount = project.Amount,
-                StartDate = project.StartDate,
-                EndDate = project.EndDate,
-                Location = project.Location,
-                ImageUrl = imgUrl,
-                Status = ProjectStatus.Pending
-            };
-
-            await _projectReposytory.Add(newProject);
-            await _unitOfWork.Complete();
+            _unitOfWork.Complete();
         }
 
         public async Task<IEnumerable<ProjectDto>> Get()
         {
-             await _projectReposytory.Get();
+            var projects = await _projectReposytory.Get();
+            var projectsDto = _mapper.Map<IEnumerable<ProjectDto>>(projects);
 
-            return null;
+            return projectsDto;
         }
 
-        public Task<ProjectDto> GetById(string id)
+        public async Task<ProjectDto> GetById(int id)
         {
-            throw new NotImplementedException();
+            var project = await _projectReposytory.GetById(id);
+            var projectDto = _mapper.Map<ProjectDto>(project);
+
+            return projectDto;
         }
 
         public Task Remove(ProjectDto project)

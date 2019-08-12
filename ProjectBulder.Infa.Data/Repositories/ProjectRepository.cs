@@ -24,7 +24,7 @@ namespace ProjectBulder.Infa.Data.Repositories
 
         public async Task<IEnumerable<Project>> Get()
         {
-            return (IEnumerable<Project>)(await _context.Projects.ToListAsync()).Find(p => p.StartDate > DateTime.UtcNow);
+            return await _context.Projects.ToListAsync();
         }
 
         public async Task<Project> GetById(int id)

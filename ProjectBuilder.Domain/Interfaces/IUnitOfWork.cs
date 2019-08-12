@@ -7,6 +7,6 @@ namespace ProjectBuilder.Domain.Interfaces
 {
     public interface IUnitOfWork
     {
-        Task Complete();
+        void Complete();
     }
 }

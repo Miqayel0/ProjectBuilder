@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjectBulder.Infa.Data.Repositories
 {
-    class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
 
@@ -17,9 +17,8 @@ namespace ProjectBulder.Infa.Data.Repositories
             _context = context;
         }
 
-        public async Task Complete()
+        public void Complete()
         {
-
             foreach (var entry in _context.ChangeTracker.Entries())
             {
                 if (entry.Entity is ITrackable trackable)
@@ -37,10 +36,8 @@ namespace ProjectBulder.Infa.Data.Repositories
                             break;
                     }
                 }
-
             }
-
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
     }
 }

@@ -10,10 +10,12 @@ namespace ProjectBuilder.Application.Dtos.Project
         public string Description { get; set; }
         public string InitiatorName { get; set; }
         public decimal Amount { get; set; }
-        public decimal DonationsCount { get; set; }
+        public decimal RisedAmount { get; set; }
         public int AmountRisedPercent { get; set; }
         public string Location { get; set; }
         public int SponsorsCount { get; set; }
+        public string Status { get; set; }
+        public string ImageUrl { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }

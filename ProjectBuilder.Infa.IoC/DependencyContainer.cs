@@ -4,9 +4,7 @@ using ProjectBuilder.Application.Services;
 using ProjectBuilder.Domain.Interfaces;
 using ProjectBulder.Infa.Data.Auth;
 using ProjectBulder.Infa.Data.Contexts;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using ProjectBulder.Infa.Data.Repositories;
 
 namespace ProjectBuilder.Infa.IoC
 {
@@ -16,13 +14,17 @@ namespace ProjectBuilder.Infa.IoC
         {
             // Domain Layer
             services.AddScoped<IJwtFactory, JwtFactory>();
+            services.AddScoped<IProjectRepository, ProjectRepository > ();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Application Layer
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IProjectService, ProjectService>();
 
             // Persistence Layer
             services.AddScoped<ApplicationDbContext>();
+
         }
     }
 }
