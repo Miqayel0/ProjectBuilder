@@ -33,9 +33,10 @@ namespace ProjectBuilder.WebAPI.Controllers
         }
 
         [HttpPost]
-        public void Post([FromForm] CreateProjectDto input)
+        public async Task<ActionResult> Post([FromForm] CreateProjectDto input)
         {
-            _projectService.Add(input);
+            await _projectService.Add(input);
+            return Ok();
         }
 
         [HttpPut("{id}")]

@@ -7,7 +7,7 @@ namespace ProjectBuilder.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class ValuesController : ControllerBase
     {
         // GET api/values
