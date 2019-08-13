@@ -13,5 +13,6 @@ namespace ProjectBuilder.Application.Interfaces
         Task Add(CreateProjectDto project);
         Task Remove(ProjectDto project);
         Task Update(ProjectDto project);
+        Task Donate(CreateDonationDto donation);
     }
 }

@@ -40,8 +40,10 @@ namespace ProjectBuilder.WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult> Donate(int id, [FromBody] DonationAmountInput input)
         {
+            await _projectService.Donate(new CreateDonationDto { Amount = input.Amount, Id = id });
+            return Ok();
         }
 
         [HttpDelete("{id}")]

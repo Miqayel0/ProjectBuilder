@@ -91,5 +91,33 @@ namespace ProjectBuilder.Application.Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task Donate(CreateDonationDto donation)
+        {
+            const decimal _donationLimit = 10000000;
+            var project = await _projectReposytory.GetById(donation.Id);
+
+            if (project == null || project.Status == ProjectStatus.Finished || project.Status == ProjectStatus.Stoped ||
+                   (project.DonatedAmount.HasValue && (project.DonatedAmount + donation.Amount > project.Amount)) || donation.Amount <= 0 || donation.Amount > _donationLimit)
+            {
+                throw new Exception("Something went wrong");
+            }
+
+            if (project.DonatedAmount.HasValue)
+            {
+                project.DonatedAmount += donation.Amount;
+            }
+            else
+            {
+                project.DonatedAmount = donation.Amount;
+            }
+
+            if (project.DonatedAmount == project.Amount)
+            {
+                project.Status = ProjectStatus.Finished;
+            }
+
+            _unitOfWork.Complete();
+        }
     }
 }
