@@ -92,7 +92,7 @@ namespace ProjectBuilder.Application.Services
             throw new NotImplementedException();
         }
 
-        public async Task Donate(CreateDonationDto donation)
+        public async Task<ProjectDto> Donate(CreateDonationDto donation)
         {
             const decimal _donationLimit = 10000000;
             var project = await _projectReposytory.GetById(donation.Id);
@@ -118,6 +118,8 @@ namespace ProjectBuilder.Application.Services
             }
 
             _unitOfWork.Complete();
+
+            return _mapper.Map<ProjectDto>(project);
         }
     }
 }

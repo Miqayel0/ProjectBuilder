@@ -12,7 +12,7 @@ namespace ProjectBuilder.Application.Dtos.Project
         public string InitiatorName { get; set; }
         public decimal Amount { get; set; }
         public decimal RisedAmount { get; set; }
-        public int AmountRisedPercent { get; set; }
+        public decimal AmountRisedPercent { get; set; }
         public string Location { get; set; }
         public int SponsorsCount { get; set; }
         public string Status { get; set; }
