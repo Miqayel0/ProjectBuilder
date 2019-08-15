@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectBuilder.Application.Dtos.Project;
@@ -12,6 +13,7 @@ namespace ProjectBuilder.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProjectController : ControllerBase
     {
         private readonly IProjectService _projectService;
@@ -21,9 +23,24 @@ namespace ProjectBuilder.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ProjectListViewModel>> Get()
+        public async Task<ActionResult> Get()
         {
-            return Ok(new ProjectListViewModel { Projects = await _projectService.Get() });
+            await Task.CompletedTask;
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("finished")]
+        public async Task<ActionResult<ProjectListViewModel>> GetFinished()
+        {
+            return Ok(new ProjectListViewModel { Projects = await _projectService.GetFinished() });
+        }
+
+        [HttpGet]
+        [Route("ongoing")]
+        public async Task<ActionResult<ProjectListViewModel>> GetOngoing()
+        {
+            return Ok(new ProjectListViewModel { Projects = await _projectService.GetOngoing() });
         }
 
         [HttpGet("{id}")]
@@ -33,6 +50,7 @@ namespace ProjectBuilder.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Post([FromForm] CreateProjectDto input)
         {
             await _projectService.Add(input);

@@ -7,6 +7,7 @@ using ProjectBuilder.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProjectBuilder.Application.Services
@@ -66,9 +67,18 @@ namespace ProjectBuilder.Application.Services
             _unitOfWork.Complete();
         }
 
-        public async Task<IEnumerable<ProjectDto>> Get()
+        public async Task<IEnumerable<ProjectDto>> GetFinished()
         {
-            var projects = await _projectReposytory.Get();
+            var projects = (await _projectReposytory.Get())
+                .Where(p => p.Status == ProjectStatus.Stoped || p.Status == ProjectStatus.Finished);
+            var projectsDto = _mapper.Map<IEnumerable<ProjectDto>>(projects);
+
+            return projectsDto;
+        }
+
+        public async Task<IEnumerable<ProjectDto>> GetOngoing()
+        {
+            var projects = (await _projectReposytory.Get()).Where(p => p.Status == ProjectStatus.Pending );
             var projectsDto = _mapper.Map<IEnumerable<ProjectDto>>(projects);
 
             return projectsDto;
@@ -106,10 +116,12 @@ namespace ProjectBuilder.Application.Services
             if (project.DonatedAmount.HasValue)
             {
                 project.DonatedAmount += donation.Amount;
+                project.DonationsCount++;
             }
             else
             {
                 project.DonatedAmount = donation.Amount;
+                project.DonationsCount = 1; // first time
             }
 
             if (project.DonatedAmount == project.Amount)
